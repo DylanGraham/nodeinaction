@@ -1,9 +1,18 @@
 const Rx = require('rxjs/Rx');
 
-const strings = ['I execute first.', 'I execute next.', 'I execute last.'];
-const obs1 = Rx.Observable.from(strings);
+const observable = Rx.Observable.create((observer) => {
+    setTimeout(() => {
+        observer.next('I execute first.');
+        setTimeout(() => {
+            observer.next('I execute next.');
+            setTimeout(() => {
+                observer.next('I execute last.');
+            }, 800);
+        }, 500);
+    }, 100);
+});
 
-obs1.subscribe({
+observable.subscribe({
     next: value => console.log(value),
     error: err => console.error('Something bad: ', err),
     complete: () => console.log("Done!")
