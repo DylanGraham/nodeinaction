@@ -7,6 +7,7 @@ const observable = Rx.Observable.create((observer) => {
             observer.next('I execute next.');
             setTimeout(() => {
                 observer.next('I execute last.');
+                observer.complete();
             }, 800);
         }, 500);
     }, 100);
