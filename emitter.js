@@ -11,6 +11,12 @@ channel.on('join', (id, client) => {
         }
     };
     channel.on('broadcast', channel.subscriptions[id]);
+    channel.on('leave', id => {
+        channel.removeListener(
+            'broadcast', channel.subscriptions[id]
+        );
+        channel.emit('broadcast', id, `${id} has left the chatroom.\n`);
+    });
 });
 const server = net.createServer(client => {
     const id = `${client.remoteAddress}:${client.remotePort}`;
@@ -18,6 +24,9 @@ const server = net.createServer(client => {
     client.on('data', data => {
         data = data.toString();
         channel.emit('broadcast', id, data);
+    });
+    client.on('close', () => {
+        channel.emit('leave', id);
     });
 });
 server.listen(8888);
