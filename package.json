@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/DylanGraham/nodeinaction/issues"
   },
-  "homepage": "https://github.com/DylanGraham/nodeinaction#readme"
+  "homepage": "https://github.com/DylanGraham/nodeinaction#readme",
+  "dependencies": {
+    "rxjs": "^5.2.0"
+  }
 }
