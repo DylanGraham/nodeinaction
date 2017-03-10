@@ -1,10 +1,34 @@
-const http = require('http');
-const port = 8080;
+http.createServer((req, res) => {
+    getTitles(res);
+}).listen(8000, '127.0.0.1');
 
-const server = http.createServer((req, res) => {
-    res.end('Hello, world.');
-});
+function getTitles(res) {
+    fs.readFile('./titles.json', (err, data) => {
+        if (err) {
+            hadError(err, res);
+        } else {
+            getTemplate(JSON.parse(data.toString()), res);
+        }
+    });
+}
 
-server.listen(port, () => {
-    console.log('Server listening on: http://localhost:%s', port);
-});
+function getTemplate(titles, res) {
+    fs.readFile('./template.html', (err, data) => {
+        if (err) {
+            hadError(err, res);
+        } else {
+            formatHtml(titles, data.toString(), res);
+        }
+    });
+}
+
+function formatHtml(titles, tmpl, res) {
+    const html = tmpl.replace('%', titles.join('</li><li>'));
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(html);
+}
+
+function hadError(err, res) {
+    console.error(err);
+    res.end('Server Error');
+}
