@@ -1,9 +1,10 @@
-setTimeout(() => {
-    console.log('I execute first.');
-    setTimeout(() => {
-        console.log('I execute next.');
-        setTimeout(() => {
-            console.log('I execute last.');
-        }, 1000);
-    }, 500);
-}, 100);
+const Rx = require('rxjs/Rx');
+
+const strings = ['I execute first.', 'I execute next.', 'I execute last.'];
+const obs1 = Rx.Observable.from(strings);
+
+obs1.subscribe({
+    next: value => console.log(value),
+    error: err => console.error('Something bad: ', err),
+    complete: () => console.log("Done!")
+});
