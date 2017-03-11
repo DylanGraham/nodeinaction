@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS articles
 `;
     db.run(sql);
 });
+
 class Article {
     static all(cb) {
         db.all('SELECT * FROM articles', cb);
@@ -28,5 +29,6 @@ class Article {
         db.run('DELETE FROM articles WHERE id = ?', id, cb);
     }
 }
+
 module.exports = db;
 module.exports.Article = Article;
