@@ -4,6 +4,11 @@ const readability = require('node-readability');
 const app = express();
 const Article = require('./db').Article;
 
+app.use(
+    '/css/bootstrap.css',
+    express.static('node_modules/bootstrap/dist/css/bootstrap.css')
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
