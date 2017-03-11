@@ -1,6 +1,6 @@
 const Rx = require('rxjs/Rx');
 
-const observable = Rx.Observable.create((observer) => {
+const observable = Rx.Observable.create(observer => {
     setTimeout(() => {
         observer.next('I execute first.');
         setTimeout(() => {
